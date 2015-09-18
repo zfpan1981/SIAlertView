@@ -320,6 +320,8 @@ static SIAlertView *__si_alert_current_view;
 + (void)hideBackgroundAnimated:(BOOL)animated
 {
     if (!animated) {
+        [__si_alert_background_window resignKeyWindow];
+        __si_alert_background_window.hidden = YES;
         [__si_alert_background_window removeFromSuperview];
         __si_alert_background_window = nil;
         return;
@@ -329,6 +331,8 @@ static SIAlertView *__si_alert_current_view;
                          __si_alert_background_window.alpha = 0;
                      }
                      completion:^(BOOL finished) {
+                         [__si_alert_background_window resignKeyWindow];
+                         __si_alert_background_window.hidden = YES;
                          [__si_alert_background_window removeFromSuperview];
                          __si_alert_background_window = nil;
                      }];
@@ -888,6 +892,7 @@ static SIAlertView *__si_alert_current_view;
     self.titleLabel = nil;
     self.messageLabel = nil;
     [self.buttons removeAllObjects];
+    self.alertWindow.hidden = YES;
     [self.alertWindow removeFromSuperview];
     self.alertWindow = nil;
     self.layoutDirty = NO;
